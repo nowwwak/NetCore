@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace OdeToFood
 {
@@ -20,12 +21,37 @@ namespace OdeToFood
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration, IGreeter greeter)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration, IGreeter greeter, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseDefaultFiles();//this must be before UseStaticFiles in order to make index.html default
+            app.UseStaticFiles();//must add this so that we can see index.html
+            
+
+            //register custom middleware
+            app.Use(next =>
+            {
+                return async context =>
+                {
+                    logger.LogInformation("Request incoming");
+                    if (context.Request.Path.StartsWithSegments("/xxx"))
+                    {
+                        await context.Response.WriteAsync("Custom middleware for xxx path");
+                        logger.LogInformation("Request handled by this middleware");//this will not be passed to next middleware
+                    }
+                    else
+                    {
+                        await next(context);
+                        logger.LogInformation("Request outcomming");//this code is executed after next middelware returns response
+                    }
+                };
+            });
+
+            app.UseWelcomePage(new WelcomePageOptions(){Path = "/UseWelcomePageOnlyForThisPath"}); // register middleware that will show welcome page only for given path
 
             app.Run(async (context) =>
             {
