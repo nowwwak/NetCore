@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -18,6 +19,7 @@ namespace OdeToFood
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>();// adding custom services
+            services.AddMvc();// needed for mvc 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,7 +32,9 @@ namespace OdeToFood
 
             app.UseDefaultFiles();//this must be before UseStaticFiles in order to make index.html default
             app.UseStaticFiles();//must add this so that we can see index.html
-            
+
+            //app.UseMvcWithDefaultRoute(); // this is mvc with default route
+            app.UseMvc(ConfigureRoutes); // this is mvc with configured route
 
             //register custom middleware
             app.Use(next =>
@@ -55,11 +59,20 @@ namespace OdeToFood
 
             app.Run(async (context) =>
             {
+                context.Response.ContentType = "text/plain";//we can see this explicity to be sure that text is rendered ok, without that some browsers may render text without spaces
                 await context.Response.WriteAsync("Hello World!");
                 var greeting = configuration["Greeting"];//reading value from appsettings.json
                 await context.Response.WriteAsync($"<p>{greeting}</p>");
                 await context.Response.WriteAsync($"<p>{greeter.GetMessage()}</p>");//needs to configure this dependancy injection
             });
+        }
+
+        private void ConfigureRoutes(IRouteBuilder routeBuilder)
+        {
+            // /Home/Index
+            // /Home/Index/4
+            // we set defult values for controller and action
+            routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
         }
     }
 }
