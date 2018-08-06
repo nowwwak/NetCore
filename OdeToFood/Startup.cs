@@ -20,7 +20,8 @@ namespace OdeToFood
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>();// adding custom services as singleton
-            services.AddScoped<IRestaurantData,InMemoryRestaurantData>(); // life time is for HTTP request
+            //services.AddScoped // life time is for HTTP request
+            services.AddSingleton<IRestaurantData,InMemoryRestaurantData>(); // this should be scoped, but for testing I want to have same datasource
             services.AddMvc();// needed for mvc 
         }
 

@@ -6,15 +6,63 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OdeToFood.Models;
 using OdeToFood.Services;
+using OdeToFood.ViewModels;
 
 namespace OdeToFood.Controllers
 {
     public class HomeController : Controller //we don't need to inheritent from Controller, but this way we have access to more informations
     {
         private IRestaurantData restaurantData;
-        public HomeController(IRestaurantData restaurantData)
+        private IGreeter greeter;
+
+        public HomeController(IRestaurantData restaurantData, IGreeter greeter)
         {
             this.restaurantData = restaurantData;
+            this.greeter = greeter;
+        }
+        public IActionResult Details(int id)
+        {
+            var restaurant = restaurantData.Get(id);
+            if (restaurant == null)
+            {
+                return NotFound();
+                //return RedirectToAction(nameof(Index));
+            }
+
+            return View(restaurant);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] //Add this to POST request in order
+        //this is implemented with hidden input in order to make sure that the form that users is sending to us
+        //was created by us
+        public IActionResult Create(RestaurantEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var newRestaurant = new Restaurant();
+                newRestaurant.Name = model.Name;
+                newRestaurant.Cusine = model.Cusine;
+
+                newRestaurant = restaurantData.Add(newRestaurant);
+
+                // this way if users refresh browser it will post same request again
+                //return View("Details", newRestaurant);
+
+                //TO FIX we need to use
+                //POST Redirect GET Pattern and force uses to send get request, this way user will be able to refresh new page without resending data
+                return RedirectToAction(nameof(Details), new {id = newRestaurant.Id});
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public IActionResult Index()
@@ -26,7 +74,10 @@ namespace OdeToFood.Controllers
 
             //return Content("Hello from HomeController");
 
-            var model = restaurantData.GetAll();
+            var model = new HomeIndexViewModel();
+
+            model.Restaurants = restaurantData.GetAll();
+            model.CurrentMessge = greeter.GetMessage();
 
             return View(model);//it will be later decided if this is going to be JSON, XML...
         }

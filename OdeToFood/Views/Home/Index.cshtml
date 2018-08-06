@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OdeToFood.Models.Restaurant>
+﻿@model OdeToFood.ViewModels.HomeIndexViewModel
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -7,14 +7,25 @@
 <body>
     <h1>Hello!</h1>
     <div>This is the index view</div>
-    <table>
-        @foreach (var restaurant in Model)
-        {
-            <tr>
-                <td>@restaurant.Id</td>
-                <td>@restaurant.Name</td>
-            </tr>
-        }
-    </table>
+    <h1>@Model.CurrentMessge</h1>
+<table>
+    @foreach (var restaurant in Model.Restaurants)
+    {
+        <tr>
+            <td>@restaurant.Id</td>
+            <td>@restaurant.Name</td>
+            <td>
+                <a href="/home/details/@restaurant.Id">Details</a>
+            </td>
+            <td>
+                @this.Html.ActionLink("Go", "Details", new { id = restaurant.Id}) <!-- HTML helper -->
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@restaurant.Id">More</a> <!-- tag helper - asp-route-NAME_OF_PARAMETER -->
+            </td>
+        </tr>
+    }
+</table>
+    <a asp-action="Create">Add</a>
 </body>
 </html>
