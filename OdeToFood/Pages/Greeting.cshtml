@@ -1,0 +1,16 @@
+﻿@page "{name}" 
+<!-- it means that name is parameter and it is required! To have optional add ? This parameter will go to OnGet() method on model-->
+
+<!-- this page is razor page because of page directive above !!!-->
+<!-- we can inject register services, we will create propery Greeter with IGreeter service -->
+@inject IGreeter Greeter
+
+@model GreetingModel
+
+<div>This is Razor Page</div>
+<div>Razor pages are also using _ViewImports and _ViewStart but they must be inside same folder!</div>
+<div>Message from injected servcie</div>
+<div>@Greeter.GetMessage()</div>
+
+<div>Message from service passed to model</div>
+<div>@Model.CurrentGreeting</div>
