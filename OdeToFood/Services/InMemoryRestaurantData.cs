@@ -19,6 +19,7 @@ namespace OdeToFood.Services
                 new Restaurant() {Id = 3, Name = "King's Contrivance"}
             };
         }
+
         public IEnumerable<Restaurant> GetAll()
         {
             return restaurants.OrderBy(r => r.Name);
@@ -35,6 +36,16 @@ namespace OdeToFood.Services
             restaurants.Add(restaurant);
 
             return restaurant;
+        }
+
+        public void Update(Restaurant restaurant)
+        {
+            Restaurant old = restaurants.FirstOrDefault(r => r.Id == restaurant.Id);
+            if (old != null)
+            {
+                restaurants.Remove(old);
+                restaurants.Add(restaurant);
+            }
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿@page
+@model OdeToFood.Pages.CreateModel
+@{
+    Layout = null;
+}
+
+<h1>Create</h1>
+<form method="post">
+    <div>
+        <label asp-for="Name"></label>
+        @*<input type="text" name="Name" value=""/> - adding in old way*@
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Cusine"></label>
+        <select asp-for="Cusine" asp-items="@Html.GetEnumSelectList<CusineType>()"></select>
+        <span asp-validation-for="Cusine"></span>
+    </div>
+    <input type="submit" name="save" value="Save" />
+    <div asp-validation-summary="All"></div>
+</form>

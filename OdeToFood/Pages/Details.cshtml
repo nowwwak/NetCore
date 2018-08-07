@@ -1,0 +1,13 @@
+﻿@page "{restaurantId}"
+@model OdeToFood.Pages.DetailsModel
+
+<h1>Details Razor Page</h1>
+<h1>@Model.Restaurant.Name</h1>
+<div>
+    Id: @Model.Restaurant.Id
+</div>
+<div>
+    Cusine: @Model.Restaurant.Cusine
+</div>
+
+<a asp-page="Index" asp-page-handler="Index">Home</a>

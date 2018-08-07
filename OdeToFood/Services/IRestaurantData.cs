@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OdeToFood.Models;
 
 namespace OdeToFood.Services
@@ -8,5 +9,7 @@ namespace OdeToFood.Services
         IEnumerable<Restaurant> GetAll();
         Restaurant Get(int id);
         Restaurant Add(Restaurant restaurant);
+        void Update(Restaurant restaurant);
+
     }
 }

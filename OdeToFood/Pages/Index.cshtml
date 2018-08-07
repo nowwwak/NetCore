@@ -1,0 +1,23 @@
+﻿@page
+@model OdeToFood.Pages.IndexModel
+<h1>This is Razor Page that will list all the restaurants</h1>
+<!-- URL for this page http://localhost:51807/index-->
+
+
+<table>
+    @foreach (var restaurant in Model.Restaurants)
+    {
+    <tr>
+        <td>@restaurant.Id</td>
+        <td>@restaurant.Name</td>
+
+        <td>
+            <a asp-page="Details" asp-route-restaurantId="@restaurant.Id">More</a> <!-- tag helper - asp-route-NAME_OF_PARAMETER -->
+        </td>
+        <td>
+            <a asp-page="Edit" asp-route-id="@restaurant.Id">Edit</a> 
+        </td>
+    </tr>
+    }
+</table>
+<a asp-page="Create">Add Restaurant</a>
