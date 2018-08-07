@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+<div>
+    @RenderBody()
+</div>
+<div>
+    <!-- we can render additional secions and specify if required-->
+    @RenderSection("footer", required: false)
+</div>
+<div>
+    @DateTime.Now
+</div>
+</body>
+</html>

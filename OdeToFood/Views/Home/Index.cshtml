@@ -1,13 +1,12 @@
-﻿@model OdeToFood.ViewModels.HomeIndexViewModel
+﻿@model HomeIndexViewModel
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-    <h1>Hello!</h1>
-    <div>This is the index view</div>
-    <h1>@Model.CurrentMessge</h1>
+@{
+    ViewBag.Title = "Home page";
+    //Layout = "~/Views/Shared/_Layout.cshtml";// set layout page, I can specify this on page level or I can set it for all inside _ViewStart.cshtml
+}
+
+<h1>Hello!</h1>
+<div>This is the index view</div>
 <table>
     @foreach (var restaurant in Model.Restaurants)
     {
@@ -18,7 +17,7 @@
                 <a href="/home/details/@restaurant.Id">Details</a>
             </td>
             <td>
-                @this.Html.ActionLink("Go", "Details", new { id = restaurant.Id}) <!-- HTML helper -->
+                @this.Html.ActionLink("Go", "Details", new { id = restaurant.Id }) <!-- HTML helper -->
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@restaurant.Id">More</a> <!-- tag helper - asp-route-NAME_OF_PARAMETER -->
@@ -26,6 +25,9 @@
         </tr>
     }
 </table>
-    <a asp-action="Create">Add</a>
-</body>
-</html>
+<a asp-action="Create">Add Restaurant</a>
+
+
+@section footer {
+<h1>@Model.CurrentMessge</h1>
+}
