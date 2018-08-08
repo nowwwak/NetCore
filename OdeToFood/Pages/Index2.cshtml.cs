@@ -9,12 +9,12 @@ using OdeToFood.Services;
 
 namespace OdeToFood.Pages
 {
-    public class IndexModel : PageModel
+    public class Index2Model : PageModel
     {
         private IRestaurantData restaurantData;
         public IEnumerable<Restaurant> Restaurants { get; set; }
 
-        public IndexModel(IRestaurantData restaurantData)
+        public Index2Model(IRestaurantData restaurantData)
         {
             this.restaurantData = restaurantData;
         }

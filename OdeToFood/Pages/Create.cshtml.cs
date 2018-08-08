@@ -13,6 +13,7 @@ namespace OdeToFood.Pages
     public class CreateModel : PageModel
     {
         private IRestaurantData restaurantData;
+        [BindProperty]
         public RestaurantEditModel Restaurant { get; set; }
 
         public CreateModel(IRestaurantData restaurantData)
@@ -21,7 +22,7 @@ namespace OdeToFood.Pages
         }
         public void OnGet()
         {
-            if(restaurantData == null)
+            if(Restaurant == null)
                 Restaurant = new RestaurantEditModel();
         }
         public IActionResult OnPost()
