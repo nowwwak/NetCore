@@ -14,9 +14,9 @@ namespace OdeToFood.Services
         {
             restaurants = new List<Restaurant>()
             {
-                new Restaurant() {Id = 1, Name = "Scott's Pizza place"},
-                new Restaurant() {Id = 2, Name = "Tresiguels"},
-                new Restaurant() {Id = 3, Name = "King's Contrivance"}
+                new Restaurant() {Id = 1, Name = "Scott's Pizza place", Cusine = CusineType.German},
+                new Restaurant() {Id = 2, Name = "Tresiguels", Cusine = CusineType.Italian},
+                new Restaurant() {Id = 3, Name = "King's Contrivance", Cusine = CusineType.None}
             };
         }
 

@@ -1,0 +1,14 @@
+﻿@model OdeToFood.Models.Restaurant
+
+<section>
+    <h3>Partial view for restaurant</h3>
+    <h3>Use partial view if you can use model provided from parent page. If you need different model use View Component</h3>
+    <h3>@Model.Name</h3>
+    <div>
+        Cuisin: @Model.Cusine
+    </div>
+    <div>
+        @this.Html.ActionLink("Go", "Details", new { id = @Model.Id }) <!-- HTML helper -->
+        <a asp-action="Details" asp-route-id="@Model.Id">More</a> <!-- tag helper - asp-route-NAME_OF_PARAMETER -->
+    </div>
+</section>

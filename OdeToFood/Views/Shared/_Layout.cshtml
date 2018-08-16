@@ -6,15 +6,25 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
+    <div>
+        @RenderBody()
+    </div>
+    <div>
+        <!-- we can render additional secions and specify if required-->
+        @RenderSection("footer", required: false)
+    </div>
+    <div>
+        @DateTime.Now
+    </div>
+<div>Below is the content from ViewComponent. This is referenced on _Layout page.</div>
+@await Component.InvokeAsync("Greeter")<!-- I can pass additional parameters afte comma-->
+<!--I can reference view component in different way-->
 <div>
-    @RenderBody()
-</div>
-<div>
-    <!-- we can render additional secions and specify if required-->
-    @RenderSection("footer", required: false)
-</div>
-<div>
-    @DateTime.Now
-</div>
+    Below is the content from ViewCompoent that is referenced by tag helper 'vc'. In order this to work I must register my ViewCompoents.
+    I can do this by adding 'addTagHelper *, OdeToFood' to _ViewImports. Also I must use lower case for ViewComponent name in vc: tag. If I have GreeterOne I must muse kebab casing
+    this is greeter-one</div>
+
+    <vc:greeter></vc:greeter>
+
 </body>
 </html>

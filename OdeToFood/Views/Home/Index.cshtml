@@ -8,25 +8,32 @@
 <h1>Hello!</h1>
 <div>This is the index view</div>
 <table>
+    <!--Implementation with partial view-->
     @foreach (var restaurant in Model.Restaurants)
     {
-        <tr>
-            <td>@restaurant.Id</td>
-            <td>@restaurant.Name</td>
-            <td>
-                <a href="/home/details/@restaurant.Id">Details</a>
-            </td>
-            <td>
-                @this.Html.ActionLink("Go", "Details", new { id = restaurant.Id }) <!-- HTML helper -->
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@restaurant.Id">More</a> <!-- tag helper - asp-route-NAME_OF_PARAMETER -->
-            </td>
-        </tr>
+        @Html.Partial("_Summary", restaurant)
+        ;
     }
-</table>
-<a asp-action="Create">Add Restaurant</a>
 
+    <!--Implementation in place-->
+    @*@foreach (var restaurant in Model.Restaurants)
+        {
+            <tr>
+                <td>@restaurant.Id</td>
+                <td>@restaurant.Name</td>
+                <td>
+                    <a href="/home/details/@restaurant.Id">Details</a>
+                </td>
+                <td>
+                    @this.Html.ActionLink("Go", "Details", new {id = restaurant.Id}) <!-- HTML helper -->
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@restaurant.Id">More</a> <!-- tag helper - asp-route-NAME_OF_PARAMETER -->
+                </td>
+            </tr>
+        }*@
+</table>
+<div><a asp-action="Create">Add Restaurant</a></div>
 
 @section footer {
 <h1>@Model.CurrentMessge</h1>
