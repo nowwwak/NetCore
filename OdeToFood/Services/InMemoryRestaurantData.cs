@@ -38,7 +38,7 @@ namespace OdeToFood.Services
             return restaurant;
         }
 
-        public void Update(Restaurant restaurant)
+        public Restaurant Update(Restaurant restaurant)
         {
             Restaurant old = restaurants.FirstOrDefault(r => r.Id == restaurant.Id);
             if (old != null)
@@ -46,6 +46,8 @@ namespace OdeToFood.Services
                 restaurants.Remove(old);
                 restaurants.Add(restaurant);
             }
+
+            return restaurant;
         }
     }
 }

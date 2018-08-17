@@ -1,0 +1,7 @@
+﻿dotnet ef migrations add
+dotnet ef database update
+
+dotnet ef dbcontext list - this will list all DbContext classes from current folder
+dotnet ef dbcontext info - will print information
+dotnet ef migrations add InitialCreate - v - will create migration
+dotnet ef Database update -v - this will update database
